@@ -106,7 +106,7 @@ table & result::curTable()
 
 std::string tableCell::toString()
 {
-	return (isHeaderCell ? "h" : "") + _value;
+	return (isHeaderCell ? "h: " : "") + _value;
 }
 
 std::string	tableRow::toString()
@@ -128,7 +128,7 @@ std::string	tableBlock::toString()
 	out << "\t\tRows:\n";
 
 	for(auto & row : rows)
-		out << row.toString() << " | ";
+		out << row.toString();
 
 	return out.str();
 }

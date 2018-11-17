@@ -1,8 +1,8 @@
 import QtQuick 2.10
-import QtQuick.Window 2.10
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.3
+import QtQuick.Window 2.10
 
 Window {
 	visible:	true
@@ -10,90 +10,100 @@ Window {
 	height:		480
 	title:		qsTr("JASP Results compare tool")
 
-	Rectangle
+	color:		"black"
+
+	SplitView
 	{
+		id:				splitVertical
+		orientation:	Qt.Vertical
+
 		anchors.fill:	parent
-		color:			black
 
 		SplitView
 		{
-			id:				splitVertical
-			orientation:	Qt.Vertical
+			id:				splitHorizontal
+			orientation:	Qt.Horizontal
+			height:			splitVertical.height / 2
 
-			anchors.fill: parent
-
-			SplitView
+			ScrollView
 			{
-				id:				splitHorizontal
-				orientation:	Qt.Horizontal
-				height:			splitVertical.height / 2
+				clip:		true
+				width:		splitHorizontal.width / 2
 
-				ScrollView
+				TextEdit
 				{
-					clip:		true
-					width:		splitHorizontal.width / 2
-
-					TextEdit
-					{
-						id:		links
-						text:	"<node>example links!</node>"
-						color:	yellow
-					}
-				}
-
-				ScrollView
-				{
-					clip:		true
-					width:		splitHorizontal.width / 2
-
-					TextEdit
-					{
-						id:		rechts
-						text:	"<node>example rechts!</node>"
-						color:	yellow
-
-					}
+					id:		links
+					text:	"<node>example links!</node>"
+					color:	"yellow"
 				}
 			}
 
-			Item
+			ScrollView
 			{
-				Layout.fillHeight:	true
+				clip:		true
+				width:		splitHorizontal.width / 2
 
-				Button
+				TextEdit
 				{
-					id:		compareButton
-					text:	"Compare"
-					anchors
-					{
-						left:	parent.left
-						right:	parent.right
-					}
+					id:		rechts
+					text:	"<node>example rechts!</node>"
+					color:	"yellow"
 
-					onClicked:
-					{
-						output.text = compareResults.compare(links.text, rechts.text)
-					}
+				}
+			}
+		}
+
+		Item
+		{
+			Layout.fillHeight:	true
+
+			Button
+			{
+				id:		compareButton
+
+				anchors
+				{
+					left:	parent.left
+					right:	parent.right
 				}
 
-				ScrollView
+				onClicked:
 				{
-					clip: true
+					output.text = compareResults.compare(links.text, rechts.text)
+				}
 
-					anchors
-					{
-						top:	compareButton.bottom
-						left:	parent.left
-						right:	parent.right
-						bottom:	parent.bottom
-					}
+				background: Rectangle
+				{
+					color:			"black"
+					border.color:	"yellow"
+				}
 
-					TextEdit
-					{
-						id:					output
-						text:				"Something something something...."
-						color:				yellow
-					}
+				contentItem: Text
+				{
+					text:	"Compare"
+					color:	"yellow"
+
+					horizontalAlignment: TextEdit.AlignHCenter
+				}
+			}
+
+			ScrollView
+			{
+				clip: true
+
+				anchors
+				{
+					top:	compareButton.bottom
+					left:	parent.left
+					right:	parent.right
+					bottom:	parent.bottom
+				}
+
+				TextEdit
+				{
+					id:		output
+					text:	"Something something something...."
+					color:	"yellow"
 				}
 			}
 		}
